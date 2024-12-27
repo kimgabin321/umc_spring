@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import umc.study.validation.annotation.ExistMission;
 
 import java.time.LocalDate;
 
@@ -16,4 +17,10 @@ public class MissionRequestDTO {
     private LocalDate deadline;
     private String missionSpec;
     private Long storeId;
+
+    @Getter
+    public static class ChallengeMissionDto{
+        @ExistMission
+        private Long missionId;
+    }
 }
