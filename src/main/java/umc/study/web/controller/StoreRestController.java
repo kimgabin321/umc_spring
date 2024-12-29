@@ -16,6 +16,7 @@ import umc.study.converter.StoreConverter;
 import umc.study.domain.Mission;
 import umc.study.domain.Review;
 import umc.study.domain.Store;
+import umc.study.service.MemberMissionService.MemberMissionQueryService;
 import umc.study.service.StoreService.StoreCommandService;
 import umc.study.service.StoreService.StoreQueryService;
 import umc.study.validation.annotation.ExistPage;
@@ -33,6 +34,8 @@ public class StoreRestController {
     private final StoreCommandService storeCommandService;
 
     private final StoreQueryService storeQueryService;
+
+    private final MemberMissionQueryService memberMissionQueryService;
 
     @PostMapping("/")
     public ApiResponse<StoreResponseDTO.AddStoreResponseDTO> addStore(@RequestBody @Valid StoreRequestDTO.StoreDto request) {
@@ -69,8 +72,8 @@ public class StoreRestController {
             @Parameter(name = "storeId", description = "가게의 아이디"),
             @Parameter(name = "page", description = "페이지")
     })
-    public ApiResponse<MissionResponseDTO.MissionPreViewListDTO> getMissionList(@ExistStore @PathVariable(name = "storeId") Long storeId, @ExistPage @RequestParam(name = "page") Integer page){
+    public ApiResponse<MissionResponseDTO.MissionPreviewListDTO> getMissionList(@ExistStore @PathVariable(name = "storeId") Long storeId, @ExistPage @RequestParam(name = "page") Integer page){
         Page<Mission> missions = storeQueryService.getMissionList(storeId, page);
-        return ApiResponse.onSuccess(StoreConverter.missionPreViewListDTO(missions));
+        return ApiResponse.onSuccess(StoreConverter.missionPreviewListDTO(missions));
     }
 }

@@ -1,5 +1,6 @@
 package umc.study.converter;
 
+import org.springframework.data.domain.Page;
 import umc.study.apiPayload.exception.handler.StoreHandler;
 import umc.study.apiPayload.code.status.ErrorStatus;
 import umc.study.domain.Mission;
@@ -12,6 +13,8 @@ import umc.study.web.dto.MissionRequestDTO;
 import umc.study.web.dto.MissionResponseDTO;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MissionConverter {
 
@@ -47,6 +50,27 @@ public class MissionConverter {
                 .member(member)
                 .mission(mission)
                 .status(MissionStatus.CHALLENGING)
+                .build();
+    }
+
+    public static MissionResponseDTO.MissionPreviewDTO toMissionPreviewDTO (Mission mission){
+        return MissionResponseDTO.MissionPreviewDTO.builder()
+                .missionId(mission.getId())
+                .missionSpec(mission.getMissionSpec())
+                .reward(mission.getReward())
+                .createdAt(mission.getCreatedAt())
+                .build();
+    }
+    public static MissionResponseDTO.MissionPreviewListDTO toMissionPreviewListDTO (Page<Mission> missionList){
+        List<MissionResponseDTO.MissionPreviewDTO> missionPreviewDTOList = missionList.stream()
+                .map(MissionConverter::toMissionPreviewDTO).collect(Collectors.toList());
+        return MissionResponseDTO.MissionPreviewListDTO.builder()
+                .isLast(missionList.isLast())
+                .isFirst(missionList.isFirst())
+                .totalPage(missionList.getTotalPages())
+                .totalElements(missionList.getTotalElements())
+                .listSize(missionPreviewDTOList.size())
+                .missionList(missionPreviewDTOList)
                 .build();
     }
 }

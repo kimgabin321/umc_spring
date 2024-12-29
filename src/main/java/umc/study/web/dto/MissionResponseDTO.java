@@ -32,17 +32,21 @@ public class MissionResponseDTO {
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class MissionPreViewDTO{
+    public static class MissionPreviewDTO{
+        private Long missionId;
+        String missionSpec;
         String ownerNickname;
         Integer reward;
         String body;
+        LocalDateTime createdAt;
+
     }
     @Builder
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class MissionPreViewListDTO{
-        List<MissionPreViewDTO> missionList;
+    public static class MissionPreviewListDTO{
+        List<MissionPreviewDTO> missionList;
         Integer listSize;
         Integer totalPage;
         Long totalElements;

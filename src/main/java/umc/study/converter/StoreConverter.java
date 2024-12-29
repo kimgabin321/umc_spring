@@ -63,25 +63,24 @@ public class StoreConverter {
                 .build();
     }
 
-    public static MissionResponseDTO.MissionPreViewDTO missionPreViewDTO(Mission mission){
-        return MissionResponseDTO.MissionPreViewDTO.builder()
+    public static MissionResponseDTO.MissionPreviewDTO missionPreviewDTO(Mission mission) {
+        return MissionResponseDTO.MissionPreviewDTO.builder()
                 .ownerNickname(mission.getStore().getName())
                 .reward(mission.getReward())
                 .body(mission.getMissionSpec())
                 .build();
     }
 
-    public static MissionResponseDTO.MissionPreViewListDTO missionPreViewListDTO(Page<Mission> missionList){
-
-        List<MissionResponseDTO.MissionPreViewDTO> missionPreViewDTOList = missionList.stream()
-                .map(StoreConverter::missionPreViewDTO).collect(Collectors.toList());
-        return MissionResponseDTO.MissionPreViewListDTO.builder()
+    public static MissionResponseDTO.MissionPreviewListDTO missionPreviewListDTO(Page<Mission> missionList) {
+        List<MissionResponseDTO.MissionPreviewDTO> missionPreviewDTOList = missionList.stream()
+                .map(StoreConverter::missionPreviewDTO).collect(Collectors.toList());
+        return MissionResponseDTO.MissionPreviewListDTO.builder()
                 .isLast(missionList.isLast())
                 .isFirst(missionList.isFirst())
                 .totalPage(missionList.getTotalPages())
                 .totalElements(missionList.getTotalElements())
-                .listSize(missionPreViewDTOList.size())
-                .missionList(missionPreViewDTOList)
+                .listSize(missionPreviewDTOList.size())
+                .missionList(missionPreviewDTOList)
                 .build();
     }
 }
