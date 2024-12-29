@@ -7,12 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.study.apiPayload.code.status.ErrorStatus;
 import umc.study.apiPayload.exception.handler.MemberHandler;
+import umc.study.converter.StoreConverter;
 import umc.study.domain.Member;
+import umc.study.domain.Mission;
 import umc.study.domain.Review;
 import umc.study.domain.Store;
 import umc.study.repository.MemberRepository;
+import umc.study.repository.MissionRepository;
 import umc.study.repository.ReviewRepository;
 import umc.study.repository.StoreRepository.StoreRepository;
+import umc.study.web.dto.StoreResponseDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +31,9 @@ public class StoreQueryServiceImpl implements StoreQueryService{
     private final ReviewRepository reviewRepository;
 
     private final MemberRepository memberRepository;
+
+    private final MissionRepository missionRepository;
+
 
     @Override
     public Optional<Store> findStore(Long id) {
@@ -58,5 +65,13 @@ public class StoreQueryServiceImpl implements StoreQueryService{
 
         Page<Review> MemberPage = reviewRepository.findAllByMember(member, PageRequest.of(page, 10));
         return MemberPage;
+    }
+
+    @Override
+    public Page<Mission> getMissionList(Long StoreId, Integer page){
+        Store store = storeRepository.findById(StoreId).get();
+
+        Page<Mission> MissionPage = missionRepository.findAllByStore(store, PageRequest.of(page, 10));
+        return MissionPage;
     }
 }
