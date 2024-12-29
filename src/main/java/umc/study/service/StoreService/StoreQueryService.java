@@ -19,4 +19,5 @@ public interface StoreQueryService {
 
     Page<Review> getReviewList(Long StoreId, Integer page);
 
+    Page<Review> getMyReviewList(Long memberId, Integer page);
 }
